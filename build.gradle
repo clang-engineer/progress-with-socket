@@ -16,6 +16,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spring Boot 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // STOMP 의존성
+    implementation 'org.springframework:spring-messaging'
+    implementation 'org.springframework:spring-websocket'
 }
 
 tasks.named('test') {
