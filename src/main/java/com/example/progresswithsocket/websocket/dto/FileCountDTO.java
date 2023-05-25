@@ -11,4 +11,25 @@ public class FileCountDTO {
     this.total = total;
     this.current = current;
   }
+
+  public String getFileId() {
+    return fileId;
+  }
+
+  public Integer getTotal() {
+    return total;
+  }
+
+  public Integer getCurrent() {
+    return current;
+  }
+
+  @Override
+  public String toString() {
+    return "FileCountDTO{" +
+        "fileId='" + fileId + '\'' +
+        ", total=" + total +
+        ", current=" + current +
+        '}';
+  }
 }
