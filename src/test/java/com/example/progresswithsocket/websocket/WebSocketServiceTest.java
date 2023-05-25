@@ -31,11 +31,11 @@ class WebSocketServiceTest {
 
     for (int i = 0; i < 10; i++) {
 
-      FileCountDTO fileCountDTO = new FileCountDTO("fileId", 10, i);
+      FileCountDTO fileCountDTO = new FileCountDTO(userId, "fileId", 10, i);
       webSocketService.sendMessageToQueue(userId, fileCountDTO);
     }
 
-    verify(messagingTemplate, times(10))
-        .convertAndSendToUser(eq(userId), eq("/queue/file-progress"), any(FileCountDTO.class));
+    verify(messagingTemplate, times(10)).convertAndSend(eq("/queue/file-progress/" + userId),
+        any(FileCountDTO.class));
   }
 }

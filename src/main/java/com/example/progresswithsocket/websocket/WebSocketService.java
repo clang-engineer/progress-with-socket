@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebSocketService {
 
-  private static final Integer TOTAL_COUNT = 10;
+  private static final Integer TOTAL_COUNT = 100;
   private Integer currentCount = 0;
 
   private final Logger log = org.slf4j.LoggerFactory.getLogger(WebSocketService.class);
@@ -22,7 +22,7 @@ public class WebSocketService {
 
   public void sendMessageToQueue(String userId, FileCountDTO fileCountDTO) {
     log.info("Sending message to user: {}, message: {}", userId, fileCountDTO);
-    messagingTemplate.convertAndSendToUser(userId, "/queue/file-progress", fileCountDTO);
+    messagingTemplate.convertAndSend("/queue/file-progress/" + userId, fileCountDTO);
   }
 
   @Scheduled(fixedRate = 1000)
@@ -30,7 +30,9 @@ public class WebSocketService {
     if (currentCount > TOTAL_COUNT) {
       return;
     }
-    FileCountDTO fileCountDTO = new FileCountDTO("fileId", TOTAL_COUNT, currentCount++);
-    sendMessageToQueue("userId", fileCountDTO);
+    String userId = "test";
+    String fileId = "fileId";
+    FileCountDTO fileCountDTO = new FileCountDTO(userId, fileId, TOTAL_COUNT, currentCount++);
+    sendMessageToQueue(userId, fileCountDTO);
   }
 }
