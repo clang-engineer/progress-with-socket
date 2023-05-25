@@ -23,6 +23,9 @@ dependencies {
     // STOMP 의존성
     implementation 'org.springframework:spring-messaging'
     implementation 'org.springframework:spring-websocket'
+
+    // thyemleaf 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
