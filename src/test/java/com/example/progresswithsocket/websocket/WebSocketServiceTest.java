@@ -1,9 +1,14 @@
 package com.example.progresswithsocket.websocket;
 
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import com.example.progresswithsocket.websocket.dto.FileCountDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
@@ -22,8 +27,15 @@ class WebSocketServiceTest {
 
   @Test
   void testSendMessageToQueue() {
-    String message = "Hello from server!";
-    webSocketService.sendMessageToQueue();
-    Mockito.verify(messagingTemplate).convertAndSend("/queue/reply", message);
+    String userId = "userId";
+
+    for (int i = 0; i < 10; i++) {
+
+      FileCountDTO fileCountDTO = new FileCountDTO("fileId", 10, i);
+      webSocketService.sendMessageToQueue(userId, fileCountDTO);
+    }
+
+    verify(messagingTemplate, times(10))
+        .convertAndSendToUser(eq(userId), eq("/queue/file-progress"), any(FileCountDTO.class));
   }
 }

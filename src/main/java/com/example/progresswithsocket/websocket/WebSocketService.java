@@ -1,5 +1,6 @@
 package com.example.progresswithsocket.websocket;
 
+import com.example.progresswithsocket.websocket.dto.FileCountDTO;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,7 @@ public class WebSocketService {
     this.messagingTemplate = messagingTemplate;
   }
 
-  public void sendMessageToQueue() {
-    String message = "Hello from server!";
-    messagingTemplate.convertAndSend("/queue/reply", message);
+  public void sendMessageToQueue(String userId, FileCountDTO fileCountDTO) {
+    messagingTemplate.convertAndSendToUser(userId, "/queue/file-progress", fileCountDTO);
   }
 }
