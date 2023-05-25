@@ -13,7 +13,8 @@
       stompClient = Stomp.over(socket);
       stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/queue/file-progress/test', function (message) {
+        var userId = 'test';
+        stompClient.subscribe('/user/' + userId + '/queue/file-progress', function (message) {
           showMessage(JSON.parse(message.body));
         });
       });

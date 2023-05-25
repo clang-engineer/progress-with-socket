@@ -22,7 +22,7 @@ public class WebSocketService {
 
   public void sendMessageToQueue(String userId, FileCountDTO fileCountDTO) {
     log.info("Sending message to user: {}, message: {}", userId, fileCountDTO);
-    messagingTemplate.convertAndSend("/queue/file-progress/" + userId, fileCountDTO);
+    messagingTemplate.convertAndSendToUser(userId, "/queue/file-progress", fileCountDTO);
   }
 
   @Scheduled(fixedRate = 1000)
